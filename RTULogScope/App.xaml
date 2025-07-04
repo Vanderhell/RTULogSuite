@@ -1,0 +1,19 @@
+﻿<!--
+  RTULogScope - Application Entry Point
+  This file defines global resources and sets the initial startup window.
+-->
+<Application x:Class="RTULogScope.App"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:conv="clr-namespace:RTULogScope.ViewModels.Converters"
+             StartupUri="Views/MainWindow.xaml">
+
+    <!-- 🔁 Application-wide converters -->
+    <Application.Resources>
+        <!-- Converts bool → Visibility (used for showing/hiding elements) -->
+        <conv:BoolToVisibilityConverter x:Key="BoolToVisibilityConverter"/>
+
+        <!-- Converts bool → 👁️/🙈 icon (used in ToggleButton for stats panel) -->
+        <conv:EyeIconConverter x:Key="EyeIconConverter"/>
+    </Application.Resources>
+</Application>

@@ -1,0 +1,13 @@
+# Build artifacts
+bin/
+obj/
+.vs/
+*.user
+*.suo
+*.pdb
+*.cache
+*.log
+
+# Ignore all binaries...
+# ...but allow Portable output to be tracked
+!RTULogScope/bin/Portable/**

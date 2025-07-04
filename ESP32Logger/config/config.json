@@ -1,0 +1,344 @@
+{
+    "device": "EM-07",
+    "version": "1.0",
+    "communication": {
+        "modbus_id": 1,
+        "baudrate": 9600,
+        "parity": "N",
+        "stop_bits": 1,
+        "data_bits": 8
+    },
+    "transformers": {
+        "VTR": 100,
+        "CTR": 200
+    },
+    "logging": {
+        "enabled": true,
+        "interval_ms": 1000,
+        "output_folder": "/logs/",
+        "filename_format": "YYYY-MM-DD.csv",
+        "include_header": true
+    },
+    "debug": true,
+    "registers": [
+    {
+        "key": "voltage_l1-n",
+        "name": "Voltage L1-N",
+        "description": "Napätie fázy L1 voči N",
+        "register": 4002,
+        "type": "UINT16",
+        "unit": "V",
+        "scaling": "0.1 × VTR",
+        "access": "R-only",
+        "length": 1
+    },
+    {
+        "key": "voltage_l2-n",
+        "name": "Voltage L2-N",
+        "description": "Napätie fázy L2 voči N",
+        "register": 4003,
+        "type": "UINT16",
+        "unit": "V",
+        "scaling": "0.1 × VTR",
+        "access": "R-only",
+        "length": 1
+    },
+    {
+        "key": "voltage_l3-n",
+        "name": "Voltage L3-N",
+        "description": "Napätie fázy L3 voči N",
+        "register": 4004,
+        "type": "UINT16",
+        "unit": "V",
+        "scaling": "0.1 × VTR",
+        "access": "R-only",
+        "length": 1
+    },
+    {
+        "key": "current_l1",
+        "name": "Current L1",
+        "description": "Prúd fázy L1",
+        "register": 4026,
+        "type": "UINT16",
+        "unit": "A",
+        "scaling": "0.01 × CTR",
+        "access": "R-only",
+        "length": 1
+    },
+    {
+        "key": "current_l2",
+        "name": "Current L2",
+        "description": "Prúd fázy L2",
+        "register": 4027,
+        "type": "UINT16",
+        "unit": "A",
+        "scaling": "0.01 × CTR",
+        "access": "R-only",
+        "length": 1
+    },
+    {
+        "key": "current_l3",
+        "name": "Current L3",
+        "description": "Prúd fázy L3",
+        "register": 4028,
+        "type": "UINT16",
+        "unit": "A",
+        "scaling": "0.01 × CTR",
+        "access": "R-only",
+        "length": 1
+    },
+    {
+        "key": "apparent_power_l1",
+        "name": "Apparent Power L1",
+        "description": "Zdánlivý výkon fázy L1",
+        "register": 4072,
+        "type": "UINT16",
+        "unit": "VA",
+        "scaling": "CTR × VTR",
+        "access": "R-only",
+        "length": 1
+    },
+    {
+        "key": "apparent_power_l2",
+        "name": "Apparent Power L2",
+        "description": "Zdánlivý výkon fázy L2",
+        "register": 4073,
+        "type": "UINT16",
+        "unit": "VA",
+        "scaling": "CTR × VTR",
+        "access": "R-only",
+        "length": 1
+    },
+    {
+        "key": "apparent_power_l3",
+        "name": "Apparent Power L3",
+        "description": "Zdánlivý výkon fázy L3",
+        "register": 4074,
+        "type": "UINT16",
+        "unit": "VA",
+        "scaling": "CTR × VTR",
+        "access": "R-only",
+        "length": 1
+    },
+    {
+        "key": "apparent_power_total",
+        "name": "Apparent Power Total",
+        "description": "Celkový zdánlivý výkon",
+        "register": 4075,
+        "type": "UINT16",
+        "unit": "VA",
+        "scaling": "CTR × VTR",
+        "access": "R-only",
+        "length": 1
+    },
+    {
+        "key": "frequency",
+        "name": "Frequency",
+        "description": "Frekvencia siete",
+        "register": 4078,
+        "type": "UINT16",
+        "unit": "Hz",
+        "scaling": "× 0.01",
+        "access": "R-only",
+        "length": 1
+    },
+    {
+        "key": "power_factor_l1",
+        "name": "Power Factor L1",
+        "description": "Účinník fázy L1",
+        "register": 4079,
+        "type": "UINT16",
+        "unit": "-",
+        "scaling": "× 0.001",
+        "access": "R-only",
+        "length": 1
+    },
+    {
+        "key": "power_factor_l2",
+        "name": "Power Factor L2",
+        "description": "Účinník fázy L2",
+        "register": 4080,
+        "type": "UINT16",
+        "unit": "-",
+        "scaling": "× 0.001",
+        "access": "R-only",
+        "length": 1
+    },
+    {
+        "key": "power_factor_l3",
+        "name": "Power Factor L3",
+        "description": "Účinník fázy L3",
+        "register": 4081,
+        "type": "UINT16",
+        "unit": "-",
+        "scaling": "× 0.001",
+        "access": "R-only",
+        "length": 1
+    },
+    {
+        "key": "power_factor_total",
+        "name": "Power Factor Total",
+        "description": "Celkový účinník",
+        "register": 4082,
+        "type": "UINT16",
+        "unit": "-",
+        "scaling": "× 0.001",
+        "access": "R-only",
+        "length": 1
+    },
+    {
+        "key": "active_energy_import",
+        "name": "Active Energy Import",
+        "description": "Načítaná aktívna energia",
+        "register": 4100,
+        "type": "UINT32",
+        "unit": "kWh",
+        "scaling": "× 0.01",
+        "access": "R-only",
+        "length": 2
+    },
+    {
+        "key": "reactive_energy_import",
+        "name": "Reactive Energy Import",
+        "description": "Načítaná jalová energia",
+        "register": 4102,
+        "type": "UINT32",
+        "unit": "kvarh",
+        "scaling": "× 0.01",
+        "access": "R-only",
+        "length": 2
+    },
+    {
+        "key": "high_voltage_set",
+        "name": "High Voltage Set",
+        "description": "Maximálna prípustná hodnota napätia",
+        "register": 3000,
+        "type": "UINT16",
+        "unit": "V",
+        "scaling": "× VTR",
+        "access": "R/W",
+        "length": 1
+    },
+    {
+        "key": "high_voltage_delay_on",
+        "name": "High Voltage Delay on",
+        "description": "Meškanie pred aktiváciou vysokej napäťovej ochrany",
+        "register": 3001,
+        "type": "UINT16",
+        "unit": "s",
+        "scaling": "×1",
+        "access": "R/W",
+        "length": 1
+    },
+    {
+        "key": "high_voltage_delay_off",
+        "name": "High Voltage Delay off",
+        "description": "Meškanie pred vypnutím vysokej napäťovej ochrany",
+        "register": 3002,
+        "type": "UINT16",
+        "unit": "s",
+        "scaling": "×1",
+        "access": "R/W",
+        "length": 1
+    },
+    {
+        "key": "high_voltage_hysteresis",
+        "name": "High Voltage Hysteresis",
+        "description": "Hysteréza pre vysoké napätie",
+        "register": 3003,
+        "type": "UINT16",
+        "unit": "V",
+        "scaling": "× VTR",
+        "access": "R/W",
+        "length": 1
+    },
+    {
+        "key": "high_voltage_en/dis",
+        "name": "High Voltage En/Dis",
+        "description": "Povolenie vysokej napäťovej ochrany",
+        "register": 3004,
+        "type": "UINT16",
+        "unit": "",
+        "scaling": "0=Off,1=On",
+        "access": "R/W",
+        "length": 1
+    },
+    {
+        "key": "low_voltage_set",
+        "name": "Low Voltage Set",
+        "description": "Minimálna prípustná hodnota napätia",
+        "register": 3005,
+        "type": "UINT16",
+        "unit": "V",
+        "scaling": "× VTR",
+        "access": "R/W",
+        "length": 1
+    },
+    {
+        "key": "low_voltage_delay_on",
+        "name": "Low Voltage Delay on",
+        "description": "Meškanie pred aktiváciou nízkeho napätia",
+        "register": 3006,
+        "type": "UINT16",
+        "unit": "s",
+        "scaling": "×1",
+        "access": "R/W",
+        "length": 1
+    },
+    {
+        "key": "low_voltage_delay_off",
+        "name": "Low Voltage Delay off",
+        "description": "Meškanie pred deaktiváciou nízkeho napätia",
+        "register": 3007,
+        "type": "UINT16",
+        "unit": "s",
+        "scaling": "×1",
+        "access": "R/W",
+        "length": 1
+    },
+    {
+        "key": "low_voltage_hysteresis",
+        "name": "Low Voltage Hysteresis",
+        "description": "Hysteréza pre nízke napätie",
+        "register": 3008,
+        "type": "UINT16",
+        "unit": "V",
+        "scaling": "× VTR",
+        "access": "R/W",
+        "length": 1
+    },
+    {
+        "key": "low_voltage_en/dis",
+        "name": "Low Voltage En/Dis",
+        "description": "Povolenie nízkej napäťovej ochrany",
+        "register": 3009,
+        "type": "UINT16",
+        "unit": "",
+        "scaling": "0=Off,1=On",
+        "access": "R/W",
+        "length": 1
+    },
+    {
+        "key": "voltage_transformer_ratio_(vtr)",
+        "name": "Voltage Transformer Ratio (VTR)",
+        "description": "Pomer napäťového transformátora",
+        "register": 3015,
+        "type": "UINT16",
+        "unit": "",
+        "scaling": "-",
+        "access": "R/W",
+        "length": 1
+    },
+    {
+        "key": "current_transformer_ratio_(ctr)",
+        "name": "Current Transformer Ratio (CTR)",
+        "description": "Pomer prúdového transformátora",
+        "register": 3040,
+        "type": "UINT16",
+        "unit": "",
+        "scaling": "-",
+        "access": "R/W",
+        "length": 1
+    }
+]
+}

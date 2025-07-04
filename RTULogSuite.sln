@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.14.36202.13 d17.14
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RTULogScope", "RTULogScope\RTULogScope.csproj", "{A5765403-0567-4A00-9F3E-453535CB8074}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ESP32Logger", "ESP32Logger\ESP32Logger.csproj", "{D6FF9BAD-8D1B-450C-B39F-B6DC66489B63}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{A5765403-0567-4A00-9F3E-453535CB8074}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A5765403-0567-4A00-9F3E-453535CB8074}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A5765403-0567-4A00-9F3E-453535CB8074}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A5765403-0567-4A00-9F3E-453535CB8074}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D6FF9BAD-8D1B-450C-B39F-B6DC66489B63}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D6FF9BAD-8D1B-450C-B39F-B6DC66489B63}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D6FF9BAD-8D1B-450C-B39F-B6DC66489B63}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D6FF9BAD-8D1B-450C-B39F-B6DC66489B63}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {FB5970A0-44A8-4B1C-8B64-827619CE24A7}
+	EndGlobalSection
+EndGlobal

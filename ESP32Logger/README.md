@@ -1,4 +1,4 @@
-# EM-07 Modbus Data Logger
+# Modbus Data Logger
 
 A modular ESP32-based Modbus RTU data logger with support for SD card logging, JSON configuration, real-time clock (RTC), and dynamic scaling of transformer-based values.
 

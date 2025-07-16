@@ -56,5 +56,4 @@ See [`LICENSE`](LICENSE) for details.
 
 ## ✨ Author
 
-Created and maintained by **Peter Hajduch**  
 For feedback or contributions, please open an issue or pull request.

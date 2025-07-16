@@ -1,4 +1,4 @@
-# 🧰 EM-07 Logger – Hardware Wiring Schematic
+# 🧰 Logger – Hardware Wiring Schematic
 
 This document describes the exact wiring for your hardware setup, based on the following components:
 

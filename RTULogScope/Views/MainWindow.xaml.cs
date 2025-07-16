@@ -2,12 +2,10 @@
 // RTULogScope – Main application window logic for CSV data loading and graph exporting.
 
 using Microsoft.Win32;
-using OxyPlot;
 using OxyPlot.Wpf;
 using RTULogScope.ViewModels;
 using System;
 using System.IO;
-using System.Linq;
 using System.Windows;
 
 namespace RTULogScope.Views

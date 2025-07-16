@@ -7,7 +7,7 @@ using System.Data;
 using System.IO;
 using System.Windows;
 
-namespace RTULogScope.Services
+namespace RTULogScope
 {
     /// <summary>
     /// Provides a method to load simple CSV files into a DataTable.

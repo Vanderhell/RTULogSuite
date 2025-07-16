@@ -5,7 +5,6 @@ using OxyPlot;
 using OxyPlot.Axes;
 using OxyPlot.Series;
 using RTULogScope.Models;
-using RTULogScope.Services;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -49,7 +48,7 @@ namespace RTULogScope.ViewModels
         /// </summary>
         public void LoadCsv(string path)
         {
-            data = CsvLoader.Load(path);
+            data = JsonLogLoader.Load(path);
             Measurements.Clear();
 
             if (data == null || !data.Columns.Contains("timestamp"))
@@ -80,7 +79,7 @@ namespace RTULogScope.ViewModels
 
             foreach (var path in paths)
             {
-                var table = CsvLoader.Load(path);
+                var table = JsonLogLoader.Load(path);
                 if (table.Rows.Count == 0) continue;
 
                 if (merged.Columns.Count == 0)

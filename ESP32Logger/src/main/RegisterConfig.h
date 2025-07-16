@@ -3,19 +3,62 @@
 
 #include <Arduino.h>
 
-// Describes a single Modbus register or measurement parameter.
-// Used to configure registers dynamically from a JSON file.
-// Includes metadata, access control, and value scaling.
+/// <summary>
+/// Represents the configuration for a single Modbus register or measurement parameter.
+/// This struct is typically loaded from a JSON configuration file and contains all
+/// metadata required for reading, interpreting, and logging a Modbus register value.
+/// </summary>
 struct RegisterConfig {
-    String key;                // Unique key identifier (used in code and logs)
-    String name;               // Human-readable name (used in UI or CSV headers)
-    String description;        // Full description of the parameter for users or diagnostics
-    uint16_t register_address; // Modbus address (starting from 0 or 1 depending on device)
-    String type;               // Data type (e.g., "UINT16", "FLOAT", "UINT32")
-    String unit;               // Measurement unit (e.g., "V", "A", "Hz", "-")
-    String scaling;            // Scaling expression (e.g., "val * 0.1", "CTR * val / VTR")
-    String access;             // Access mode ("R-only", "R/W")
-    uint8_t length;            // Number of 16-bit Modbus registers (1 for 16-bit, 2 for 32-bit values)
+    /// <summary>
+    /// Unique key identifier (used in logs, data export, and internal lookup).
+    /// Example: "voltage_l1-n"
+    /// </summary>
+    String key;
+
+    /// <summary>
+    /// Human-readable name shown in UI or CSV headers.
+    /// Example: "Voltage L1-N"
+    /// </summary>
+    String name;
+
+    /// <summary>
+    /// Full technical or user-friendly description of the register.
+    /// Useful for diagnostics or documentation.
+    /// </summary>
+    String description;
+
+    /// <summary>
+    /// Modbus register address (starting from 0 or 1 depending on addressing mode).
+    /// </summary>
+    uint16_t register_address;
+
+    /// <summary>
+    /// Type of data stored in the register.
+    /// Common types: "UINT16", "UINT32", "FLOAT"
+    /// </summary>
+    String type;
+
+    /// <summary>
+    /// Unit of the measurement, e.g. "V", "A", "Hz", "kWh", or "-"
+    /// </summary>
+    String unit;
+
+    /// <summary>
+    /// Optional scaling expression, used to convert raw Modbus values.
+    /// Examples: "val * 0.1", "CTR * val / VTR"
+    /// </summary>
+    String scaling;
+
+    /// <summary>
+    /// Access mode of the register: "R-only", "R/W", etc.
+    /// </summary>
+    String access;
+
+    /// <summary>
+    /// Number of 16-bit Modbus registers used by this value.
+    /// For example: 1 for UINT16, 2 for FLOAT/UINT32.
+    /// </summary>
+    uint8_t length;
 };
 
 #endif // REGISTER_CONFIG_H

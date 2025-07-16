@@ -1,19 +1,35 @@
 #include "StorageManager.h"
 #include <ArduinoJson.h>
 
-// Initialize the SD card interface.
-// Must be called once during system startup before using SD operations.
+/// <summary>
+/// Initializes the SD card interface.
+/// Must be called once during system startup before using SD operations.
+/// </summary>
 void StorageManager::begin() {
-    SD.begin();
+    Serial.println("[StorageManager] Initializing SD card...");
+    if (SD.begin()) {
+        Serial.println("[StorageManager] SD card initialized successfully.");
+    } else {
+        Serial.println("[StorageManager][ERROR] Failed to initialize SD card.");
+    }
 }
 
-// Check whether the SD card is available and initialized.
+/// <summary>
+/// Checks whether the SD card is available and properly initialized.
+/// This method reinitializes the SD interface to verify presence.
+/// </summary>
+/// <returns>True if SD card is available, false otherwise</returns>
 bool StorageManager::isCardPresent() {
-    return SD.begin(); 
+    bool available = SD.begin();  // Triggers a re-check
+    Serial.printf("[StorageManager] SD card presence: %s\n", available ? "yes" : "no");
+    return available;
 }
 
-// Generate the current day's log filename based on date format.
-// Uses filenameFormat and combines it with outputFolder.
+/// <summary>
+/// Generates today's log filename based on the current date,
+/// using the configured folder and filename format (strftime style).
+/// </summary>
+/// <returns>Full path to the generated log file</returns>
 String StorageManager::getTodayLogFilename() {
     time_t t = time(nullptr);
     struct tm* tm_info = localtime(&t);
@@ -21,26 +37,42 @@ String StorageManager::getTodayLogFilename() {
     char buffer[64];
     strftime(buffer, sizeof(buffer), filenameFormat.c_str(), tm_info);
 
-    return outputFolder + String(buffer);
+    String fullPath = outputFolder + String(buffer);
+    Serial.printf("[StorageManager] Log filename generated: %s\n", fullPath.c_str());
+    return fullPath;
 }
 
-// Write measurement values to a JSON log file on the SD card.
-// Each log entry is stored as a single JSON line.
-// If value count doesn't match register count, logging is skipped.
+/// <summary>
+/// Writes a single log entry to the SD card in JSON format.
+/// Each entry contains a timestamp and an array of key/value/unit objects.
+/// Skips logging if SD is unavailable or configuration mismatch occurs.
+/// </summary>
+/// <param name="timestamp">Formatted timestamp string</param>
+/// <param name="values">Vector of float values from Modbus</param>
+/// <param name="registers">Vector of RegisterConfig defining keys and units</param>
 void StorageManager::writeJSON(const String& timestamp, const std::vector<float>& values, const std::vector<RegisterConfig>& registers) {
-    if (!loggingEnabled || values.size() != registers.size()) {
-        logError("Logging skipped or register/value size mismatch.");
+    if (!loggingEnabled) {
+        Serial.println("[StorageManager][WARN] Logging disabled.");
+        return;
+    }
+
+    if (values.size() != registers.size()) {
+        Serial.printf("[StorageManager][ERROR] Register/value count mismatch: %d vs %d\n", registers.size(), values.size());
+        logError("Logging skipped due to register/value size mismatch.");
         return;
     }
 
     String filename = getTodayLogFilename();
     File file = SD.open(filename, FILE_APPEND);
     if (!file) {
+        Serial.printf("[StorageManager][ERROR] Failed to open log file: %s\n", filename.c_str());
         logError("Failed to open log file: " + filename);
         return;
     }
 
-    // Create JSON document with timestamp and value array
+    Serial.printf("[StorageManager] Writing log entry to %s\n", filename.c_str());
+
+    // Create JSON structure
     DynamicJsonDocument doc(2048);
     doc["timestamp"] = timestamp;
 
@@ -52,30 +84,49 @@ void StorageManager::writeJSON(const String& timestamp, const std::vector<float>
         entry["unit"] = registers[i].unit;
     }
 
+    // Write to file
     serializeJson(doc, file);
-    file.println();  // newline after each JSON object
+    file.println();  // Ensure newline for NDJSON
     file.close();
+
+    Serial.println("[StorageManager] Log entry saved.");
 }
 
-// Configure the storage settings for logging.
-// Called during config load to set folder, filename format, and flags.
+/// <summary>
+/// Configures internal storage behavior:
+/// target folder, filename pattern, and logging flags.
+/// </summary>
+/// <param name="folder">Directory to store log files</param>
+/// <param name="format">Filename format (strftime-style)</param>
+/// <param name="enable">Enable or disable logging</param>
+/// <param name="withHeader">Whether to include CSV headers (reserved)</param>
 void StorageManager::configure(const String& folder, const String& format, bool enable, bool withHeader) {
     outputFolder = folder;
     filenameFormat = format;
     loggingEnabled = enable;
     includeHeader = withHeader;
+
+    Serial.println("[StorageManager] Logging configuration updated:");
+    Serial.printf("  - Output folder: %s\n", outputFolder.c_str());
+    Serial.printf("  - Filename format: %s\n", filenameFormat.c_str());
+    Serial.printf("  - Logging enabled: %s\n", loggingEnabled ? "true" : "false");
+    Serial.printf("  - Include header: %s\n", includeHeader ? "true" : "false");
 }
 
-// Append an error message to a persistent error log on the SD card.
-// The log includes a timestamp and the message.
+/// <summary>
+/// Logs an error message to a persistent error log file on the SD card,
+/// prefixed with a timestamp for later diagnostics.
+/// </summary>
+/// <param name="message">Error message to log</param>
 void StorageManager::logError(const String& message) {
     File errorFile = SD.open(errorLogFile, FILE_APPEND);
     if (errorFile) {
         time_t now = time(nullptr);
         errorFile.print("[");
-        errorFile.print(ctime(&now));  // includes newline
+        errorFile.print(ctime(&now));  // Includes newline
         errorFile.print("] ERROR: ");
         errorFile.println(message);
         errorFile.close();
     }
+    Serial.printf("[StorageManager][LOG_ERROR] %s\n", message.c_str());
 }

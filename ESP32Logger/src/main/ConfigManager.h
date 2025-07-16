@@ -8,45 +8,93 @@
 
 class StorageManager;
 
-// Structure for holding Modbus serial communication settings.
+/// <summary>
+/// Structure for holding Modbus RTU serial communication parameters.
+/// These values are typically loaded from JSON configuration.
+/// </summary>
 struct ModbusSettings {
-    uint8_t slave_id;     // Modbus slave address
-    long baudrate;        // Serial baud rate
-    char parity;          // Parity ('N', 'E', or 'O')
-    uint8_t stop_bits;    // Number of stop bits (usually 1)
-    uint8_t data_bits;    // Number of data bits (usually 8)
+    uint8_t slave_id;     ///< Modbus slave address
+    long baudrate;        ///< Baud rate (e.g., 9600, 19200)
+    char parity;          ///< Parity ('N' = None, 'E' = Even, 'O' = Odd)
+    uint8_t stop_bits;    ///< Stop bits (usually 1)
+    uint8_t data_bits;    ///< Data bits (usually 8)
 };
 
-// Loads and manages device configuration from a JSON file on SD card.
-// Provides access to Modbus settings, polling intervals, and register definitions.
+/// <summary>
+/// Manages application configuration loaded from SD card (JSON).
+/// Provides Modbus communication settings, polling interval,
+/// register definitions, transformer ratios, and debug flags.
+/// </summary>
 class ConfigManager {
 public:
-    // Attach a storage handler for error logging and configuration of output.
+    /// <summary>
+    /// Assigns a reference to the storage manager for logging errors.
+    /// </summary>
     void setStorage(StorageManager* storage);
 
-    // Load configuration from SD card.
-    // Reads and parses JSON file located at /config/config.json.
+    /// <summary>
+    /// Returns voltage transformer ratio loaded from config.
+    /// </summary>
+    float getVTR();
+
+    /// <summary>
+    /// Returns current transformer ratio loaded from config.
+    /// </summary>
+    float getCTR();
+
+    /// <summary>
+    /// Returns the Modbus register address where VTR is stored.
+    /// </summary>
+    uint16_t getVTRRegister() const;
+
+    /// <summary>
+    /// Returns the Modbus register address where CTR is stored.
+    /// </summary>
+    uint16_t getCTRRegister() const;
+
+    /// <summary>
+    /// Loads the configuration from "/config/config.json" on the SD card.
+    /// Parses all required fields and stores them internally.
+    /// </summary>
     void load();
 
-    // Get the data polling interval in milliseconds.
-    // Returns configured interval or default (1000 ms).
-    unsigned long getPollingInterval();
+    /// <summary>
+    /// Returns the polling interval (in milliseconds) for data acquisition.
+    /// Defaults to 1000 ms if not configured.
+    /// </summary>
+    unsigned long getPollingInterval() const;
 
-    // Get the current Modbus communication settings.
+    /// <summary>
+    /// Returns the current Modbus communication settings.
+    /// </summary>
     ModbusSettings getModbusSettings();
 
-    // Retrieve the list of Modbus register configurations.
+    /// <summary>
+    /// Returns a list of all configured Modbus registers to read.
+    /// </summary>
     std::vector<RegisterConfig> getRegisters();
 
-    // Check if debug mode is enabled from config.
+    /// <summary>
+    /// Returns true if debug mode is enabled in configuration.
+    /// </summary>
     bool isDebugEnabled();
 
+    /// <summary>
+    /// Returns true if 1-based Modbus addressing (offset) is enabled.
+    /// </summary>
+    bool isAddressOffsetEnabled() const { return addressOffsetEnabled; }
+
 private:
-    StorageManager* storage = nullptr;     // Optional logging and file interface
-    unsigned long pollingInterval;         // Polling interval for data collection
-    ModbusSettings modbusSettings;         // Modbus serial config
-    std::vector<RegisterConfig> registers; // List of Modbus registers to read
-    bool debugEnabled = false;             // Debug flag
+    StorageManager* storage = nullptr;              ///< Reference to logger/storage handler
+    unsigned long pollingInterval = 1000;           ///< Interval between Modbus reads
+    ModbusSettings modbusSettings;                  ///< Modbus serial configuration
+    std::vector<RegisterConfig> registers;          ///< Configured list of Modbus registers
+    bool debugEnabled = false;                      ///< Enables verbose debugging if true
+    float transformerVTR = 1.0f;                    ///< Voltage transformer ratio
+    float transformerCTR = 1.0f;                    ///< Current transformer ratio
+    uint16_t vtrRegister = 0;                       ///< Optional register to read VTR from device
+    uint16_t ctrRegister = 0;                       ///< Optional register to read CTR from device
+    bool addressOffsetEnabled = false;              ///< Enables 1-based addressing (Modbus)
 };
 
 #endif // CONFIG_MANAGER_H

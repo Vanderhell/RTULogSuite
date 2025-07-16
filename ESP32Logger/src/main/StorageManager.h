@@ -5,47 +5,63 @@
 #include <vector>
 #include "RegisterConfig.h"
 
-// Handles SD card logging and error reporting.
-// Responsible for writing logs in JSON format,
-// generating filenames based on date,
-// and logging errors to a persistent file.
+/// <summary>
+/// Manages SD card logging operations, including:
+/// - Writing log entries in JSON format
+/// - Error logging to persistent file
+/// - File and folder naming based on date
+/// </summary>
 class StorageManager {
 public:
-    // Initialize the SD card interface.
-    // Must be called before using any storage functionality.
+    /// <summary>
+    /// Initializes the SD card interface.
+    /// Must be called once during system startup before performing any file operations.
+    /// </summary>
     void begin();
 
-    // Check if the SD card is present and accessible.
+    /// <summary>
+    /// Checks whether the SD card is available and initialized.
+    /// This reinitializes the SD interface for verification.
+    /// </summary>
+    /// <returns>True if the card is present and accessible, false otherwise</returns>
     bool isCardPresent();
 
-    // Write a log entry in JSON format.
-    // Each entry includes a timestamp and an array of register values.
-    // Parameters:
-    // - timestamp: e.g., "2025-07-03 12:00:00"
-    // - values: float values read from Modbus
-    // - registers: matching RegisterConfig definitions
+    /// <summary>
+    /// Writes a single log entry in JSON format to the SD card.
+    /// Each entry includes a timestamp and an array of measurement objects (key/value/unit).
+    /// </summary>
+    /// <param name="timestamp">Timestamp string (e.g., "2025-07-03 12:00:00")</param>
+    /// <param name="values">Float values corresponding to registers</param>
+    /// <param name="registers">Register definitions with key and unit</param>
     void writeJSON(const String& timestamp, const std::vector<float>& values, const std::vector<RegisterConfig>& registers);
 
-    // Log an error message to persistent log on SD card.
+    /// <summary>
+    /// Appends an error message with timestamp to a persistent error log file on the SD card.
+    /// </summary>
+    /// <param name="message">Error message to be logged</param>
     void logError(const String& message);
 
-    // Configure the logging output.
-    // Parameters:
-    // - folder: path on SD card
-    // - format: filename format with strftime syntax
-    // - enable: enable or disable logging
-    // - withHeader: include CSV header (not used for JSON)
+    /// <summary>
+    /// Configures logging behavior, including output folder and filename format.
+    /// </summary>
+    /// <param name="folder">Target output folder (e.g., "/logs/")</param>
+    /// <param name="format">Filename format (e.g., "log_%Y%m%d.json") using strftime syntax</param>
+    /// <param name="enable">True to enable logging, false to disable</param>
+    /// <param name="withHeader">Whether to include CSV headers (not used in JSON)</param>
     void configure(const String& folder, const String& format, bool enable, bool withHeader);
 
 private:
-    // Generate today's filename from folder + format
+    /// <summary>
+    /// Generates the full path for today's log file using the current date and configured format.
+    /// </summary>
+    /// <returns>Full SD card file path for today's log</returns>
     String getTodayLogFilename();
 
-    String errorLogFile = "error.log";        // Error log file path
-    String outputFolder = "/";                // Directory for logs
-    String filenameFormat = "data_%Y%m%d.json"; // Date-based filename format
-    bool loggingEnabled = true;               // Global logging flag
-    bool includeHeader = true;                // Whether to write CSV headers (for future use)
+    String errorLogFile = "error.log";                 // Error log filename
+    String outputFolder = "/";                         // Output directory
+    String filenameFormat = "data_%Y%m%d.json";        // Filename format (strftime-compatible)
+    bool loggingEnabled = true;                        // Enable/disable logging
+    bool includeHeader = true;                         // Reserved for future CSV support
 };
 
 #endif // STORAGE_MANAGER_H

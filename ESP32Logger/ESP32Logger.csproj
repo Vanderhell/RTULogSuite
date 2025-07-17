@@ -38,12 +38,12 @@
     <None Include="hardware_wiring_schematic.md" />
     <None Include="README.md" />
     <None Include="SD Card\config\config.json" />
-    <None Include="SD Card\logs\2023-07-12.csv" />
-    <None Include="SD Card\logs\2023-07-13.csv" />
     <None Include="SD Card\logs\2025-07-12.csv" />
     <None Include="src\main\main.ino" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Assests\zapojenie.jpg" />
+    <Content Include="Assests\zostava.jpg" />
     <Content Include="src\main\ConfigManager.cpp" />
     <Content Include="src\main\ConfigManager.h" />
     <Content Include="src\main\DataLogger.cpp" />

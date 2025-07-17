@@ -42,8 +42,8 @@
     <None Include="src\main\main.ino" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Assests\zapojenie.jpg" />
-    <Content Include="Assests\zostava.jpg" />
+    <Content Include="Assets\zapojenie.jpg" />
+    <Content Include="Assets\zostava.jpg" />
     <Content Include="src\main\ConfigManager.cpp" />
     <Content Include="src\main\ConfigManager.h" />
     <Content Include="src\main\DataLogger.cpp" />

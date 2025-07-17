@@ -18,6 +18,8 @@ Key Features:
 - Export graph to PNG
 - 100% portable – no installation required
 
+![Live view](RTULogScope/Assets/program.png)
+
 📂 App folder: [`/RTULogScope`](RTULogScope/README.md)
 
 ---
@@ -32,6 +34,9 @@ Firmware for the ESP32 microcontroller that:
 📂 Firmware folder: [`/ESP32Logger`](ESP32Logger/README.md)
 
 ---
+![Live view](ESP32Logger/Assets/zapojenie.jpg)
+
+![Live view](ESP32Logger/Assets/zostava.jpg)
 
 ## 🧭 Repository Structure
 

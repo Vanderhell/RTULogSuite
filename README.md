@@ -62,9 +62,3 @@ See [`LICENSE`](LICENSE) for details.
 ## ✨ Author
 
 For feedback or contributions, please open an issue or pull request.
-
-
-## Slovenský sprievodca pre začiatočníkov
-
-V priečinku [docs](docs/00-obsah-a-ako-projekt-tecie.md) nájdeš postupné vysvetlenie štruktúry projektu, ESP32 firmvéru, Modbus komunikácie, ukladania dát a desktopovej aplikácie. Výklad je písaný pre začínajúceho programátora a obsahuje príklady aj upozornenia na rozdiely medzi dokumentáciou a aktuálnym kódom.
-

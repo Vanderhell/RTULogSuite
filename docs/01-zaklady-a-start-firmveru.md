@@ -162,3 +162,11 @@ ESP32 sa zapne
 
 V ďalšej lekcii prejdeme, ako sa JSON konfigurácia zmení na Modbus nastavenia a ako sa surové číslo premení na meranie.
 
+## Dodatočné upresnenie: zlyhané Modbus čítanie
+
+`ModbusManager::readAll()` pri chybe čítania vloží do výsledného zoznamu `NAN`, no stále vloží jednu položku pre každý nakonfigurovaný register. Preto sa počet výsledkov často rovná počtu registrov aj vtedy, keď niektoré čítanie zlyhalo.
+
+`DataLogger::logAll()` kontroluje iba to, či zoznam nie je prázdny a či majú zoznamy rovnakú veľkosť. Samotnú hodnotu `NAN` nekontroluje. Taký cyklus teda môže označiť ako úspešný a poslať ho na zápis. Pri serializácii sa neplatné číslo môže zobraziť ako JSON `null`.
+
+To je rozdiel medzi „máme jednu výslednú položku pre každý register“ a „každé meranie bolo úspešne prečítané“. Aktuálny kód spoľahlivo overuje len prvú podmienku.
+
